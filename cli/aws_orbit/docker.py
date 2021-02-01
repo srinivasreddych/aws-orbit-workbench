@@ -46,8 +46,10 @@ def ecr_pull(manifest: "Manifest", name: str, tag: str = "latest") -> None:
     ecr_address = f"{manifest.account_id}.dkr.ecr.{manifest.region}.amazonaws.com"
     sh.run(f"docker pull {ecr_address}/{name}:{tag}")
 
+
 def ecr_pull_public(name: str, tag: str = "latest") -> None:
     sh.run(f"docker pull {name}:{tag}")
+
 
 def ecr_pull_external(manifest: "Manifest", repository: str, tag: str = "latest") -> None:
     parts: List[str] = repository.split(".")
