@@ -202,8 +202,9 @@ class Manifest:
             Optional[str], self.raw_file.get("codeartifact-repository", None)
         )
         # Images
-        # print(os.environ['USE_PUBLIC_ECR'])
-        PUBLIC_ECR = True
+        print(os.environ['USE_PUBLIC_ECR'])
+        PUBLIC_ECR = os.environ['USE_PUBLIC_ECR']
+        # PUBLIC_ECR = True
         if self.raw_file.get("images") is None:
             self.images = MANIFEST_FILE_IMAGES_DEFAULTS
         else:
@@ -211,7 +212,7 @@ class Manifest:
             for k, v in MANIFEST_FILE_IMAGES_DEFAULTS.items():  # Filling missing images
                 if k not in self.images:
                     self.images[k] = v
-                elif PUBLIC_ECR:
+                elif PUBLIC_ECR == "true":
                     self.images[k] = v
 
         print(f"########## {self.images}$$$$$$$")
