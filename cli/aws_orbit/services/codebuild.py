@@ -128,7 +128,8 @@ def start(
     credentials: Optional[str] = None
     if manifest.images["code-build-image"]["source"] == "ecr":
         repo = manifest.images["code-build-image"]["repository"]
-        if ".amazonaws.com/" not in repo:
+        if ".amazonaws.com/" not in repo and "public.ecr" not in repo:
+            _logger.debug("MADE IT IN scond IF")
             repo = f"{manifest.account_id}.dkr.ecr.{manifest.region}.amazonaws.com/{repo}"
         credentials = "SERVICE_ROLE"
     _logger.debug("Repository: %s", repo)
