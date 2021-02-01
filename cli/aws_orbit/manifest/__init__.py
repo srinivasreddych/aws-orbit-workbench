@@ -97,7 +97,7 @@ MANIFEST_FILE_IMAGES_DEFAULTS: MANIFEST_FILE_IMAGES_TYPE = cast(
             "version": "v1.3.0",
         },
         "code-build-image": {
-            "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/landing-page",
+            "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/code-build-base",
             "source": "ecr",
             "version": "latest",
         },
