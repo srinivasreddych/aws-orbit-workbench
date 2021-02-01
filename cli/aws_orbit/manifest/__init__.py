@@ -62,7 +62,7 @@ MANIFEST_FILE_IMAGES_DEFAULTS: MANIFEST_FILE_IMAGES_TYPE = cast(
     MANIFEST_FILE_IMAGES_TYPE,
     {
         "jupyter-hub": {
-            "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench-jupyter-hub",
+            "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/jupyter-hub",
             "source": "ecr",
             "version": "latest",
         },
