@@ -203,6 +203,8 @@ class Manifest:
         )
         # Images
         print("=========================================================")
+        print(self.filename)
+        print(self.filename_dir)
         print(self.raw_file)
         PUBLIC_ECR = self.raw_file.get("use_public")
         print(PUBLIC_ECR)
