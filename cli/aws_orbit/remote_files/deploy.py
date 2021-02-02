@@ -104,12 +104,7 @@ def _deploy_images_batch(manifest: Manifest, images: List[Tuple[str, Optional[st
             buildspec = codebuild.generate_spec(
                 manifest=manifest,
                 plugins=False,
-                cmds_build=[
-                    (
-                        'export USE_PUBLIC_ECR="true" && orbit remote --command _deploy_image'
-                        f" ./conf/manifest.yaml {name} {script_str}"
-                    )
-                ],
+                cmds_build=[f"orbit remote --command _deploy_image ./conf/manifest.yaml {name} {script_str}"],
             )
             futures.append(executor.submit(_deploy_image_remotely, manifest, name, bundle_path, buildspec))
 
