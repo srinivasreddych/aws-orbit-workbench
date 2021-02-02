@@ -204,6 +204,11 @@ class Manifest:
         # Images
         PUBLIC_ECR = self.raw_file.get("use_public")
         print(PUBLIC_ECR)
+        print("=========================================================")
+        print(self.raw_file.get("use_public"))
+        print(self.raw_file.get("use_public_1"))
+        print(self.raw_file.get("use_public_2"))
+        print("=========================================================")
         # PUBLIC_ECR = True
         if self.raw_file.get("images") is None:
             self.images = MANIFEST_FILE_IMAGES_DEFAULTS
