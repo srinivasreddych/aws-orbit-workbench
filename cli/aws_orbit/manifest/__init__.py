@@ -202,8 +202,8 @@ class Manifest:
             Optional[str], self.raw_file.get("codeartifact-repository", None)
         )
         # Images
-        print(os.environ["USE_PUBLIC_ECR"])
-        PUBLIC_ECR = os.environ["USE_PUBLIC_ECR"]
+        PUBLIC_ECR = self.raw_file.get("use_public")
+        print(PUBLIC_ECR)
         # PUBLIC_ECR = True
         if self.raw_file.get("images") is None:
             self.images = MANIFEST_FILE_IMAGES_DEFAULTS
