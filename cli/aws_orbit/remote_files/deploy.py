@@ -58,6 +58,7 @@ def _deploy_image(args: Tuple[str, ...]) -> None:
         docker.deploy_image_from_source(manifest=manifest, dir=path, name=f"orbit-{manifest.name}-{image_name}")
     else:
         _logger.debug("Replicating docker iamge to ECR...")
+        print(manifest.raw_file)
         docker.replicate_image(
             manifest=manifest, image_name=image_name, deployed_name=f"orbit-{manifest.name}-{image_name}"
         )
@@ -103,7 +104,7 @@ def _deploy_images_batch(manifest: Manifest, images: List[Tuple[str, Optional[st
             buildspec = codebuild.generate_spec(
                 manifest=manifest,
                 plugins=False,
-                cmds_build=[f"orbit remote --command _deploy_image ./conf/manifest.yaml {name} {script_str}"],
+                cmds_build=[f"export USE_PUBLIC_ECR=\"true\" && orbit remote --command _deploy_image ./conf/manifest.yaml {name} {script_str}"],
             )
             futures.append(executor.submit(_deploy_image_remotely, manifest, name, bundle_path, buildspec))
 
