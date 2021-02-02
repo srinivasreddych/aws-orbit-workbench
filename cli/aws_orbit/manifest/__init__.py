@@ -221,7 +221,7 @@ class Manifest:
             for k, v in MANIFEST_FILE_IMAGES_DEFAULTS.items():  # Filling missing images
                 if k not in self.images:
                     self.images[k] = v
-                elif PUBLIC_ECR == "true":
+                elif PUBLIC_ECR:
                     self.images[k] = v
 
         print(f"########## {self.images}$$$$$$$")
