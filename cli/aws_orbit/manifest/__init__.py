@@ -206,22 +206,13 @@ class Manifest:
         print(self.filename)
         print(self.filename_dir)
         print(self.raw_file)
-        PUBLIC_ECR = self.raw_file.get("use_public")
-        print(PUBLIC_ECR)
         print("=========================================================")
-        print(self.raw_file.get("use_public"))
-        print(self.raw_file.get("use_public_1"))
-        print(self.raw_file.get("use_public_2"))
-        print("=========================================================")
-        # PUBLIC_ECR = True
         if self.raw_file.get("images") is None:
             self.images = MANIFEST_FILE_IMAGES_DEFAULTS
         else:
             self.images = cast(MANIFEST_FILE_IMAGES_TYPE, self.raw_file["images"])
             for k, v in MANIFEST_FILE_IMAGES_DEFAULTS.items():  # Filling missing images
                 if k not in self.images:
-                    self.images[k] = v
-                elif PUBLIC_ECR:
                     self.images[k] = v
 
         print(f"########## {self.images}$$$$$$$")
