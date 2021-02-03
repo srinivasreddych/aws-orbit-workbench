@@ -214,6 +214,8 @@ class Manifest:
             for k, v in MANIFEST_FILE_IMAGES_DEFAULTS.items():  # Filling missing images
                 if k not in self.images:
                     self.images[k] = v
+                else:
+                    self.images[k] = v
 
         _logger.debug(f"########## {self.images}$$$$$$$")
 
