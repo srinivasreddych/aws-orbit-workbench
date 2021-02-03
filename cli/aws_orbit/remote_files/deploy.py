@@ -58,7 +58,7 @@ def _deploy_image(args: Tuple[str, ...]) -> None:
         docker.deploy_image_from_source(manifest=manifest, dir=path, name=f"orbit-{manifest.name}-{image_name}")
     else:
         _logger.debug("Replicating docker iamge to ECR...")
-        print(manifest.raw_file)
+        _logger.debug(f"here1: {manifest.raw_file}")
         docker.replicate_image(
             manifest=manifest, image_name=image_name, deployed_name=f"orbit-{manifest.name}-{image_name}"
         )

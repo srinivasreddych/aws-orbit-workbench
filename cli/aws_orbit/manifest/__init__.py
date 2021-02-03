@@ -202,11 +202,11 @@ class Manifest:
             Optional[str], self.raw_file.get("codeartifact-repository", None)
         )
         # Images
-        print("=========================================================")
-        print(self.filename)
-        print(self.filename_dir)
-        print(self.raw_file)
-        print("=========================================================")
+        _logger.debug("=========================================================")
+        _logger.debug(self.filename)
+        _logger.debug(self.filename_dir)
+        _logger.debug(f"here:2{self.raw_file}")
+        _logger.debug("=========================================================")
         if self.raw_file.get("images") is None:
             self.images = MANIFEST_FILE_IMAGES_DEFAULTS
         else:
@@ -215,7 +215,7 @@ class Manifest:
                 if k not in self.images:
                     self.images[k] = v
 
-        print(f"########## {self.images}$$$$$$$")
+        _logger.debug(f"########## {self.images}$$$$$$$")
 
         self.vpc: VpcManifest = parse_vpc(manifest=self)
         if "teams" in self.raw_file and hasattr(self, "raw_file"):
@@ -401,6 +401,7 @@ class Manifest:
         _logger.debug("Fetching SSM manifest data...")
         self.raw_ssm = self._read_manifest_ssm()
         if self.raw_ssm is not None:
+            _logger.debug("inside if? Fetching SSM manifest data...")
             raw: MANIFEST_TYPE = self.raw_ssm
             self.landing_page_url = cast(Optional[str], raw.get("landing-page-url"))
             self.elbs = cast(Optional[Dict[str, Dict[str, Any]]], raw.get("elbs"))
@@ -426,7 +427,9 @@ class Manifest:
             self.internet_accessible = cast(bool, raw.get("internet-accessible", False))
             self.codeartifact_domain = cast(Optional[str], raw.get("codeartifact-domain", None))
             self.codeartifact_repository = cast(Optional[str], raw.get("codeartifact-repository", None))
+            _logger.debug(f"self.images before {self.images}")
             self.images = cast(MANIFEST_FILE_IMAGES_TYPE, raw.get("images"))
+            _logger.debug(f"self.images after {self.images}")
             self.load_balancers_subnets = cast(List[str], raw.get("load-balancers-subnets"))
             self.user_pool_id = cast(Optional[str], raw.get("user-pool-id"))
             if not hasattr(self, "vpc"):
