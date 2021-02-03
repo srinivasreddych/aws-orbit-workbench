@@ -429,9 +429,11 @@ class Manifest:
             self.internet_accessible = cast(bool, raw.get("internet-accessible", False))
             self.codeartifact_domain = cast(Optional[str], raw.get("codeartifact-domain", None))
             self.codeartifact_repository = cast(Optional[str], raw.get("codeartifact-repository", None))
-            _logger.debug(f"self.images before {self.images}")
+            if hasattr(self, 'images'):
+                _logger.debug(f"self.images before {self.images}")
             self.images = cast(MANIFEST_FILE_IMAGES_TYPE, raw.get("images"))
-            _logger.debug(f"self.images after {self.images}")
+            if hasattr(self, 'images'):
+                _logger.debug(f"self.images after {self.images}")
             self.load_balancers_subnets = cast(List[str], raw.get("load-balancers-subnets"))
             self.user_pool_id = cast(Optional[str], raw.get("user-pool-id"))
             if not hasattr(self, "vpc"):
