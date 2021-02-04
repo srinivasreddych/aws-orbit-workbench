@@ -63,22 +63,22 @@ MANIFEST_FILE_IMAGES_DEFAULTS: MANIFEST_FILE_IMAGES_TYPE = cast(
     {
         "jupyter-hub": {
             "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/jupyter-hub",
-            "source": "ecr-public",
+            "source": "ecr",
             "version": "latest",
         },
         "jupyter-user": {
             "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/jupyter-user",
-            "source": "ecr-public",
+            "source": "ecr",
             "version": "latest",
         },
         "jupyter-user-spark": {
             "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/jupyter-user-spark",
-            "source": "ecr-public",
+            "source": "ecr",
             "version": "latest",
         },
         "landing-page": {
             "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/landing-page",
-            "source": "ecr-public",
+            "source": "ecr",
             "version": "latest",
         },
         "aws-efs-csi-driver": {
@@ -98,7 +98,7 @@ MANIFEST_FILE_IMAGES_DEFAULTS: MANIFEST_FILE_IMAGES_TYPE = cast(
         },
         "code-build-image": {
             "repository": "public.ecr.aws/v3o4w1g6/aws-orbit-workbench/code-build-base",
-            "source": "ecr-public",
+            "source": "ecr",
             "version": "latest",
         },
     },
@@ -214,8 +214,6 @@ class Manifest:
             for k, v in MANIFEST_FILE_IMAGES_DEFAULTS.items():  # Filling missing images
                 if k not in self.images:
                     self.images[k] = v
-                # else:
-                #     self.images[k] = v
 
         _logger.debug(f"########## {self.images}$$$$$$$")
 

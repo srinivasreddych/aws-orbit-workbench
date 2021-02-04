@@ -44,10 +44,10 @@ def dockerhub_pull(name: str, tag: str = "latest") -> None:
 
 def ecr_pull(manifest: "Manifest", name: str, tag: str = "latest") -> None:
     if name.startswith("public.ecr.aws"):
-        sh.run(f"docker pull {name}:{tag}")
+        repository = f"{name}"
     else:
-        ecr_address = f"{manifest.account_id}.dkr.ecr.{manifest.region}.amazonaws.com"
-        sh.run(f"docker pull {ecr_address}/{name}:{tag}")
+        repository = f"{manifest.account_id}.dkr.ecr.{manifest.region}.amazonaws.com/{name}"
+    sh.run(f"docker pull {repository}:{tag}")
 
 
 def ecr_pull_external(manifest: "Manifest", repository: str, tag: str = "latest") -> None:
@@ -152,9 +152,6 @@ def replicate_image(
     elif source == "ecr":
         ecr_pull(manifest=manifest, name=source_repository, tag=source_version)
         _logger.debug("Pulled ECR Image")
-    elif source == "ecr-public":
-        ecr_pull_public(name=source_repository, tag=source_version)
-        _logger.debug("Pulled ECR Public Image")
     elif source == "ecr-external":
         ecr_pull_external(manifest=manifest, repository=source_repository, tag=source_version)
         _logger.debug("Pulled external ECR Image")
