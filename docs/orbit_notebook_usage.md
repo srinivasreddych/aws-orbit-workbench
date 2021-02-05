@@ -15,16 +15,23 @@ The Team deidcated resources utilize IAM Roles, Security Groups, and KMS Keys to
 4. Upon selection of a Team, Users are redirected to a Jupyter Hub instance where they can Start or Reconnect to a Jupyter Notebook instance. This Jupyter Hub instance runs on an EKS Managed Node (EC2 Instance) dedicated to the Team.
 5. SSM Parameter Store is queried for Metadata describing the Jupyter Notebook Profiles available to members. 
 6. Upon selection of the Profile, Users are redirected to a dedicated Jupyter Notebook instance. This Jupyter Notebook instance runs on and EKS Managed Node dedicated to the Team. This Jupyter Notebook instance provides tools and integrations with other AWS Services. Users have the option to use the Jupyter Notebook instance to do data analysis, or to offload analysis to other compute engines (e.g. Redshift, EMR)
+
     a. Additional Metadata about the integrations and services available to Team members can be retrieved from the Team's dedicated SSM Parameter Store.
+
     b. An Orbit Workbench Plugin can create and make available a Team dedicated CodeCommit repository.
+
     c. Each Jupyter Notebook instance has a dedicated EBS Volume attached to supply high speed, ephemeral storage. This volume is encrypted with the Team dedicated KMS Key.
+
     d. An Orbit Workbench Plugin can create and make available a Team dedicated Redshift Cluster. The Cluster has a Team shared Security Group attached to enable and restrict access, uses the Team IAM Role for access to data in S3, and encrypts data stored in the Cluster with the Team dedicated KMS Key.
+
     e. An Orbit Workbench Plugin can create and make available one or more Team dedicated EMR Clusters. These clusters attach the Team shared Security Group to their Master to enable and restrict access, use the Team IAM Role as their EC2 Instance Profile, and are configured to encrypt data locally and off-cluster with the Team KMS Key.
+
     f. Teams are granted read/write access to specific S3 Buckets and Prefixes to be used as "Scratch" space. These preexisting Buckets are provided as input parameters by Administrators when a Team is deployed. The Team IAM Role is configured to grant read/write access to Team dedicated Prefixes within these buckets.
+
     g. A Team dedicated EFS Access Point is created to provide a shared Team "Drive". The preexisting EFS Volume is provided as an input parameter by Administrators when a Team is deployed. 
 
 ## Env and Team Deployemnt
-It is expected that organizations will deploy AWS Orbit Workbench into existing environments. Prerequistes of these environments are: 
+It is expected that organizations will deploy the Orbit Env and one or more Teams into existing AWS environments. Prerequistes of these environments are: 
 - S3 Bucket to be used for Team "Scratch" space
 - Amazon Cognito User Pool
 - EFS Volume 
