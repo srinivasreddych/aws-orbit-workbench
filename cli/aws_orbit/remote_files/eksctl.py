@@ -53,7 +53,7 @@ def create_nodegroup_structure(manifest: "Manifest", team: "TeamManifest", env_n
         "maxSize": team.nodes_num_max,
         "volumeSize": team.local_storage_size,
         "ssh": {"allow": False},
-        "labels": {"team": team.name, "orbit/compute-type": "ec2"},
+        "labels": {"team": team.name, "orbit/compute-type": "ec2", "k8s.amazonaws.com/accelerator": "vgpu"},
         "tags": {"Env": f"orbit-{env_name}", "TeamSpace": team.name},
         "iam": {"instanceRoleARN": manifest.eks_env_nodegroup_role_arn},
         "securityGroups": {"attachIDs": [team.team_security_group_id]},
