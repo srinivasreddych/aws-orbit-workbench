@@ -15,6 +15,7 @@
 import logging
 import os
 import pprint
+import re
 from typing import TYPE_CHECKING, Any, Dict, Optional, cast
 
 import yaml
@@ -44,6 +45,10 @@ def create_nodegroup_structure(manifest: "Manifest", team: "TeamManifest", env_n
     if team.eks_nodegroup_role_arn is None:
         _logger.debug(f"ValueError: team.eks_nodegroup_role_arn: {team.eks_nodegroup_role_arn}")
         return {"name": team.name}
+    labels = {"team": team.name, "orbit/compute-type": "ec2"}
+    # Extra label for gpu instance types
+    if re.match("^p[2-4]|^g[3-4]", team.instance_type):
+        labels["k8s.amazonaws.com/accelerator"] = "vgpu"
     return {
         "name": team.name,
         "privateNetworking": True,
@@ -53,7 +58,7 @@ def create_nodegroup_structure(manifest: "Manifest", team: "TeamManifest", env_n
         "maxSize": team.nodes_num_max,
         "volumeSize": team.local_storage_size,
         "ssh": {"allow": False},
-        "labels": {"team": team.name, "orbit/compute-type": "ec2", "k8s.amazonaws.com/accelerator": "vgpu"},
+        "labels": labels,
         "tags": {"Env": f"orbit-{env_name}", "TeamSpace": team.name},
         "iam": {"instanceRoleARN": manifest.eks_env_nodegroup_role_arn},
         "securityGroups": {"attachIDs": [team.team_security_group_id]},
