@@ -84,8 +84,14 @@ c.KubeSpawner.pvc_name_template = pvc_name_template
 c.KubeSpawner.volumes = [
     {"name": "efs-volume", "persistentVolumeClaim": {"claimName": "jupyterhub"}},
     {"name": "ebs-volume", "persistentVolumeClaim": {"claimName": pvc_name_template}},
+    {"name": "nvidia-mps", "hostPath": {"path": "/tmp/nvidia-mps"}},
 ]
-c.KubeSpawner.volume_mounts = [{"mountPath": "/efs", "name": "efs-volume"}, {"mountPath": "/ebs", "name": "ebs-volume"}]
+c.KubeSpawner.volume_mounts = [
+    {"mountPath": "/efs", "name": "efs-volume"},
+    {"mountPath": "/ebs", "name": "ebs-volume"},
+    {"mountPath": "/tmp/nvidia-mps", "name": "nvidia-mps"}
+]
+c.KubeSpawner.extra_resource_limits = {"nvidia.com/gpu": "1"}
 # This will allow Jovyan to write to the ebs volume
 c.KubeSpawner.init_containers = [
     {
@@ -96,7 +102,7 @@ c.KubeSpawner.init_containers = [
         "volumeMounts": [{"mountPath": "/ebs", "name": "ebs-volume"}],
     }
 ]
-c.KubeSpawner.fs_gid = 65534
+c.KubeSpawner.fs_gid = 1000
 c.KubeSpawner.lifecycle_hooks = {"postStart": {"exec": {"command": ["/bin/sh", "/etc/jupyterhub/bootstrap.sh"]}}}
 c.KubeSpawner.node_selector = {"team": TEAM}
 c.KubeSpawner.service_account = f"{TEAM}"

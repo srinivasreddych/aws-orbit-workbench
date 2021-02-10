@@ -1,0 +1,3 @@
+[submodule "images/gpu-jupyter/docker-stacks"]
+	path = images/gpu-jupyter/docker-stacks
+	url = https://github.com/jupyter/docker-stacks.git
