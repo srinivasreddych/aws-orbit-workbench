@@ -50,7 +50,7 @@ SPAWNER
 
 c.JupyterHub.spawner_class = "kubespawner.KubeSpawner"
 c.Spawner.default_url = "/lab"
-c.Spawner.cmd = ["/usr/local/bin/start-singleuser.sh"]
+c.Spawner.cmd = ["/usr/local/bin/start-singleuser.sh", "-e", "CHOWN_EXTRA=/home/jovyan/.aws/cache"]
 c.Spawner.args = [
     "--SingleUserServerApp.default_url=/lab",
 ]
@@ -91,7 +91,9 @@ c.KubeSpawner.volume_mounts = [
     {"mountPath": "/ebs", "name": "ebs-volume"},
     {"mountPath": "/tmp/nvidia-mps", "name": "nvidia-mps"}
 ]
+
 c.KubeSpawner.extra_resource_limits = {"nvidia.com/gpu": "1"}
+
 # This will allow Jovyan to write to the ebs volume
 c.KubeSpawner.init_containers = [
     {
@@ -102,7 +104,7 @@ c.KubeSpawner.init_containers = [
         "volumeMounts": [{"mountPath": "/ebs", "name": "ebs-volume"}],
     }
 ]
-c.KubeSpawner.fs_gid = 1000
+c.KubeSpawner.fs_gid = 100
 c.KubeSpawner.lifecycle_hooks = {"postStart": {"exec": {"command": ["/bin/sh", "/etc/jupyterhub/bootstrap.sh"]}}}
 c.KubeSpawner.node_selector = {"team": TEAM}
 c.KubeSpawner.service_account = f"{TEAM}"
