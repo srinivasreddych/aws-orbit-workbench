@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: aws-virtual-gpu-device-plugin-daemonset
-  namespace: kube-system
 spec:
   selector:
     matchLabels:

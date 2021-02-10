@@ -141,9 +141,9 @@ profile_list_default = [
         "default": True,
     },
     {
-        "display_name": "Small - 1GPU",
-        "slug": "small",
-        "description": "4 CPU + 8G MEM",
+        "display_name": "Small - GPU",
+        "slug": "small-gpu",
+        "description": "4 CPU + 8G MEM + 1 GPU",
         "kubespawner_override": {
             "cpu_guarantee": 4,
             "cpu_limit": 4,
@@ -153,9 +153,9 @@ profile_list_default = [
         },
     },
     {
-        "display_name": "Small - 1vGPU",
-        "slug": "small",
-        "description": "4 CPU + 8G MEM",
+        "display_name": "Small - vGPU",
+        "slug": "small-vgpu",
+        "description": "4 CPU + 8G MEM + 1 vGPU",
         "kubespawner_override": {
             "cpu_guarantee": 4,
             "cpu_limit": 4,
