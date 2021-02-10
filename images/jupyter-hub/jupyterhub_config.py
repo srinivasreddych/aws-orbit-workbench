@@ -92,8 +92,6 @@ c.KubeSpawner.volume_mounts = [
     {"mountPath": "/tmp/nvidia-mps", "name": "nvidia-mps"}
 ]
 
-c.KubeSpawner.extra_resource_limits = {"nvidia.com/gpu": "1"}
-
 # This will allow Jovyan to write to the ebs volume
 c.KubeSpawner.init_containers = [
     {
@@ -143,7 +141,7 @@ profile_list_default = [
         "default": True,
     },
     {
-        "display_name": "Small",
+        "display_name": "Small - 1GPU",
         "slug": "small",
         "description": "4 CPU + 8G MEM",
         "kubespawner_override": {
@@ -151,6 +149,19 @@ profile_list_default = [
             "cpu_limit": 4,
             "mem_guarantee": "8G",
             "mem_limit": "8G",
+            "extra_resource_limits": {"nvidia.com/gpu": "1"},
+        },
+    },
+    {
+        "display_name": "Small - 1vGPU",
+        "slug": "small",
+        "description": "4 CPU + 8G MEM",
+        "kubespawner_override": {
+            "cpu_guarantee": 4,
+            "cpu_limit": 4,
+            "mem_guarantee": "8G",
+            "mem_limit": "8G",
+            "extra_resource_limits": {"k8s.amazonaws.com/vgpu": "1"},
         },
     },
     {
