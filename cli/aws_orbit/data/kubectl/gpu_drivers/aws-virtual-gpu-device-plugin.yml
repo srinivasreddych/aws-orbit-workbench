@@ -37,7 +37,7 @@ spec:
       # In case machine deploy MPS device plugin and change compute mode to
       initContainers:
       - name: set-compute-mode
-        image: nvidia/cuda:10.1-runtime-ubuntu16.04
+        image: nvidia/cuda:11.0-base
         command: ['nvidia-smi', '-c', 'EXCLUSIVE_PROCESS']
         securityContext:
           capabilities:
