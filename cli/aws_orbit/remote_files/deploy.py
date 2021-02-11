@@ -73,7 +73,7 @@ def _deploy_image_remotely(manifest: Manifest, name: str, bundle_path: str, buil
         bundle_path=bundle_path,
         buildspec=buildspec,
         codebuild_log_callback=None,
-        timeout=15,
+        timeout=90,
     )
     _logger.debug("%s Docker Image deployed into ECR", name)
 

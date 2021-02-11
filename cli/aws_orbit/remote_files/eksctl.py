@@ -47,7 +47,7 @@ def create_nodegroup_structure(manifest: "Manifest", team: "TeamManifest", env_n
         return {"name": team.name}
     labels = {"team": team.name, "orbit/compute-type": "ec2"}
     # Extra label for gpu instance types
-    if re.match("^p[2-4]|^g[3-4]", team.instance_type):
+    if re.match("^p[2-9]|^g[3-9]", team.instance_type):
         labels["k8s.amazonaws.com/accelerator"] = "vgpu"
     return {
         "name": team.name,

@@ -105,7 +105,7 @@ def destroy_all(env: str, teams_only: bool, keep_demo: bool, debug: bool) -> Non
                 bundle_path=bundle_path,
                 buildspec=buildspec,
                 codebuild_log_callback=ctx.progress_bar_callback,
-                timeout=45,
+                timeout=90,
             )
         if teams_only:
             ctx.info("Env Skipped")
