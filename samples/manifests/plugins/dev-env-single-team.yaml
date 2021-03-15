@@ -34,7 +34,7 @@ Networking:
     PrivateSubnets: !SSM ${/orbit-foundation/dev-env/resources::PrivateSubnets}
     IsolatedSubnets: !SSM ${/orbit-foundation/dev-env/resources::IsolatedSubnets}
     Data:
-        InternetAccessible: false
+        InternetAccessible: !ENV ${INTERNET_ACCESSIBLE::false}
         NodesSubnets: !SSM ${/orbit-foundation/dev-env/resources::NodesSubnets}
     Frontend:
         LoadBalancersSubnets: !SSM ${/orbit-foundation/dev-env/resources::LoadBalancersSubnets}
