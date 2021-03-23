@@ -379,6 +379,32 @@ def list_current_pods(label_selector: str = None):
     return res["items"]
 
 
+def list_storage_pvc(all: bool = False):
+    load_kube_config()
+    api_instance = CoreV1Api()
+    params = dict()
+    params["_preload_content"] = False
+    try:
+        if all:
+            _logger.debug("Listing pvc for all namespaces")
+            api_response = api_instance.list_persistent_volume_claim_for_all_namespaces(**params)
+        else:
+            props = get_properties()
+            team_name = props["AWS_ORBIT_TEAM_SPACE"]
+            _logger.debug(f"Listing pvc for {team_name} namespace")
+            params["namespace"] = team_name
+            api_response = api_instance.list_namespaced_persistent_volume_claim(**params)
+        res = json.loads(api_response.data)
+    except ApiException as e:
+        _logger.info("Exception when calling CoreV1Api->list persistent volume claims: %s\n" % e)
+        raise e
+
+    if "items" not in res:
+        return []
+
+    return res["items"]
+
+
 def delete_job(job_name: str, grace_period_seconds: int = 30):
     props = get_properties()
     global __CURRENT_TEAM_MANIFEST__, __CURRENT_ENV_MANIFEST__
