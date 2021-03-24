@@ -37,6 +37,7 @@ class StorageRouteHandler(APIHandler):
 
     @web.authenticated
     def get(self):
+        self.log.debug("Entered storage GET")
         global TEAMPVCS
         type: Optional[str] = self.get_argument("type", default="")
         self.log.info(f"GET - {self.__class__} - {type} {format}")
@@ -49,6 +50,8 @@ class StorageRouteHandler(APIHandler):
                 data = ALLPVCS
             else:
                 raise Exception("Unknown type: %s", type)
+                #TEAMPVCS = controller.list_storage_pvc(all=False)
+                #data = TEAMPVCS
 
             if "MOCK" in os.environ:
                 with open(f"{Path(__file__).parent.parent.parent}/test/mockup/storage-pvc-{type}.json", "w") as outfile:
@@ -67,5 +70,6 @@ class StorageRouteHandler(APIHandler):
                     raise Exception("Unknown type: %s", type)
 
         self.finish(self._dump(data, type))
+        self.log.debug("Exit storage GET")
 
 
